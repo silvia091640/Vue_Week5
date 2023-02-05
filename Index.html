@@ -82,7 +82,7 @@
                 <td>
                   <div class="input-group input-group-sm">
                     <div class="input-group mb-3">
-                  <input type="number" class="form-control" min="1" v-model.number="cart.qty">        
+                  <input type="number" class="form-control" min="1" v-model.number="cart.qty" @blur="updateCart(cart)">        
                   <div>{{ cart.product.unit }}</div>
                     </div>
                 </div>
@@ -102,6 +102,7 @@
         >
             <product-modal
               :product="product"
+              @add-cart="addCart"
             ></product-modal>
           
         </div>
@@ -136,9 +137,9 @@
                   </div>
                   <div>
                     <div class="input-group">
-                      <input type="number" class="form-control" min="1" v-model.number="product.qty">
+                      <input type="number" class="form-control" min="1" v-model.number="qty" >
                       <button type="button" class="btn btn-primary"
-                      @click="addCart(product.id)">加入購物車</button>
+                      @click="$emit('add-cart', product.id, qty)">加入購物車</button>
                     </div>
                   </div>
                 </div>

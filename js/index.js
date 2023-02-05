@@ -54,6 +54,21 @@ const app=createApp({
                 console.log(error);
             })
         },
+        updateCart(item){
+            console.log(item)
+            this.cartData.product_id=item.id;
+            this.cartData.qty=item.qty;
+            axios.put(`${apiUrl}/api/${path}/cart/${item.id}`,{ data:this.cartData })
+            .then((res)=>{
+                this.getCarts();
+                alert(res.data.message);
+            })
+            .catch(error=>{
+            
+                console.log(error);
+            })
+
+        },
         removeCartItem(cartId){
             axios.delete(`${apiUrl}/api/${path}/cart/${cartId}`)
             .then((res)=>{
@@ -110,7 +125,7 @@ const app=createApp({
 
 
 app.component("product-modal", {
-   props: ["product","qty","addCart"],
+   props: ["product"],
     template: "#product-modal-template",
   });
 app.mount("#app");
