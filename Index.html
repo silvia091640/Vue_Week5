@@ -58,6 +58,9 @@
             </tbody>
           </table>
           <!-- 購物車清單 -->
+          <div class="text-end">
+            <button class="btn btn-outline-danger" type="button" @click="removeAllCarts">清空購物車</button>
+          </div>
           <table class="table align-middle">
             <thead>
               <tr>
@@ -69,11 +72,22 @@
             </thead>
             <tbody>
               <tr v-for="cart in carts" :key="cart.id">
-                <td>{{ item.title }}</td>
                 <td>
-                  <del>原價 {{ item.origin_price }} 元</del>
-                  <div class="h5">現在只要 {{ item.price }}元</div>
+                  <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCartItem(cart.id)">
+                  <i class="fas fa-spinner fa-pulse"></i>
+                  x
+                </button>
+                </td>
+                <td>{{ cart.product.title }}</td>
+                <td>
+                  <div class="input-group input-group-sm">
+                    <div class="input-group mb-3">
+                  <input type="number" class="form-control" min="1" v-model.number="cart.qty">        
+                  <div>{{ cart.product.unit }}</div>
+                    </div>
+                </div>
                 </td> 
+                <td class="text-end">{{ cart.product.price }}</td>
               </tr>
             </tbody>
           </table>
@@ -122,9 +136,9 @@
                   </div>
                   <div>
                     <div class="input-group">
-                      <input type="number" class="form-control" min="1" v-model.number="qty">
+                      <input type="number" class="form-control" min="1" v-model.number="product.qty">
                       <button type="button" class="btn btn-primary"
-                      @click="addCart">加入購物車</button>
+                      @click="addCart(product.id)">加入購物車</button>
                     </div>
                   </div>
                 </div>
@@ -149,6 +163,6 @@
       integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
       crossorigin="anonymous"
     ></script>
-    <script src="js/products.js" type="module"></script>
+    <script src="js/index.js" type="module"></script>
   </body>
 </html>

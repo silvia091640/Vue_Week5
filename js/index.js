@@ -6,11 +6,6 @@ const apiUrl="https://vue3-course-api.hexschool.io/v2";
 
 const path="silvia-hexschool";
 
-
-let productModal = '';
-// let delProductModal='';
-
-
 const app=createApp({
     data() {
         return {          
@@ -29,7 +24,54 @@ const app=createApp({
             axios.get(`${apiUrl}/api/${path}/admin/products/all`)
             .then((res)=>{
                 this.products=res.data.products;
-                console.log(res.data.products);
+            })
+            .catch(error=>{            
+                console.log(error);
+            })
+
+        },
+        getCarts(){
+            axios.get(`${apiUrl}/api/${path}/cart`)
+            .then((res)=>{
+                this.carts=res.data.data.carts;
+                console.log(res.data.data);
+            })
+            .catch(error=>{       
+                console.log(error);
+            })
+        },
+        addCart(productId,qty=1) {
+            this.cartData.product_id=productId;
+            this.cartData.qty=qty;
+            axios.post(`${apiUrl}/api/${path}/cart`,{ data:this.cartData })
+            .then((res)=>{
+                
+                // console.log(res);
+                this.getCarts();
+            })
+            .catch(error=>{
+            
+                console.log(error);
+            })
+        },
+        removeCartItem(cartId){
+            axios.delete(`${apiUrl}/api/${path}/cart/${cartId}`)
+            .then((res)=>{
+                this.getCarts();
+                console.log(res);
+                alert(res.data.message);
+            })
+            .catch(error=>{
+            
+                console.log(error);
+            })
+
+        },
+        removeAllCarts(){
+            axios.delete(`${apiUrl}/api/${path}/carts`)
+            .then((res)=>{
+                this.getCarts();
+                alert(res.data.message);
             })
             .catch(error=>{
             
@@ -51,20 +93,7 @@ const app=createApp({
             this.productModal.show();
             
         },
-        addCart(productId,qty=1) {
-            this.cartData.product_id=productId;
-            this.cartData.qty=qty;
-            console.log(this.cartData)
-            axios.post(`${apiUrl}/api/${path}/cart`,{ data:this.cartData })
-            .then((res)=>{
-                
-                console.log(res);
-            })
-            .catch(error=>{
-            
-                console.log(error);
-            })
-        }
+       
        
     },
     mounted() {
@@ -72,8 +101,8 @@ const app=createApp({
 
       axios.defaults.headers.common.Authorization = token;
 
-      this.checkAdmin();
-    //   this.getAllProducts();   
+      this.getAllProducts();   
+      this.getCarts(); 
       this.productModal=new bootstrap.Modal(this.$refs.productModal);
     //   this.createProduct();
     },
