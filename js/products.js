@@ -17,8 +17,11 @@ const app=createApp({
             product:{},
             products:[],
             productModal:{},
-            // isNew: false,
-            // page:{}
+            carts:[],
+            cartData:{
+                product_id: "",
+                qty: 1
+            }
         }
     },
     methods: {
@@ -34,34 +37,6 @@ const app=createApp({
             })
 
         },
-        saveProduct(){
-            if(this.isNew)
-            {
-                axios.post(`${apiUrl}/api/${path}/admin/product`,{data :this.tempProduct })
-                .then((res)=>{
-                    productModal.hide();
-                    this.getAllProducts();
-                    
-                })
-                .catch(error=>{
-                
-                    console.log(error);
-                })
-            }
-            else{
-             axios.put(`${apiUrl}/api/${path}/admin/product/${this.tempProduct.id}`, { data: this.tempProduct })
-            .then((res)=>{
-                productModal.hide();
-                this.getAllProducts();
-                
-            })
-            .catch(error=>{
-            
-                console.log(error);
-            })
-            }
-           
-        },
         checkAdmin(){
           axios.post(`${apiUrl}/api/user/check`)
           .then(res=>{            
@@ -75,6 +50,20 @@ const app=createApp({
             this.product={...item};   
             this.productModal.show();
             
+        },
+        addCart(productId,qty=1) {
+            this.cartData.product_id=productId;
+            this.cartData.qty=qty;
+            console.log(this.cartData)
+            axios.post(`${apiUrl}/api/${path}/cart`,{ data:this.cartData })
+            .then((res)=>{
+                
+                console.log(res);
+            })
+            .catch(error=>{
+            
+                console.log(error);
+            })
         }
        
     },
@@ -92,7 +81,7 @@ const app=createApp({
 
 
 app.component("product-modal", {
-   props: ["product"],
+   props: ["product","qty","addCart"],
     template: "#product-modal-template",
   });
 app.mount("#app");
