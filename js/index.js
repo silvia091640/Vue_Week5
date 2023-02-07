@@ -16,7 +16,8 @@ const app=createApp({
             cartData:{
                 product_id: "",
                 qty: 1
-            }
+            },
+            isLoading: false,
         }
     },
     methods: {
@@ -119,10 +120,13 @@ const app=createApp({
       this.getAllProducts();   
       this.getCarts(); 
       this.productModal=new bootstrap.Modal(this.$refs.productModal);
+    //   this.isLoading = true;
     //   this.createProduct();
     },
 })
 
+// 元件註冊
+app.component('loading', VueLoading.Component);
 
 app.component("product-modal", {
    props: ["product"],

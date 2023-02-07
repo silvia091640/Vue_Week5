@@ -11,6 +11,12 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+
+    <link
+    href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@6/dist/css/index.css"
+    rel="stylesheet"
+  />
+
   </head>
 
   <body>
@@ -57,6 +63,7 @@
               </tr>
             </tbody>
           </table>
+          
           <!-- 購物車清單 -->
           <div class="text-end">
             <button class="btn btn-outline-danger" type="button" @click="removeAllCarts">清空購物車</button>
@@ -71,6 +78,7 @@
               </tr>
             </thead>
             <tbody>
+              
               <tr v-for="cart in carts" :key="cart.id">
                 <td>
                   <button type="button" class="btn btn-outline-danger btn-sm" @click="removeCartItem(cart.id)">
@@ -91,7 +99,7 @@
               </tr>
             </tbody>
           </table>
-          
+         
           <!-- Modal -->
           <div
           ref="productModal"
@@ -164,6 +172,10 @@
       integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@6"></script>
+   
+
     <script src="js/index.js" type="module"></script>
   </body>
 </html>
