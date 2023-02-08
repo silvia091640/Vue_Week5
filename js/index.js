@@ -38,6 +38,15 @@ const app=createApp({
                 product_id: "",
                 qty: 1
             },
+            form:{
+                user:{
+                name: '',
+                email: '',
+                tel: '',
+                address: '',
+                },
+                message: '',
+            },
             isLoading: false,
         }
     },
@@ -109,6 +118,7 @@ const app=createApp({
             .then((res)=>{
                 this.getCarts();
                 alert(res.data.message);
+
             })
             .catch(error=>{
             
@@ -117,6 +127,15 @@ const app=createApp({
 
         },
         createOrder(){
+            console.log(this.form)
+            axios.post(`${apiUrl}/api/${path}/order`,{ data :this.form })
+            .then((res)=>{
+                alert(res.data.message);
+            })
+            .catch(error=>{            
+                console.log(error);
+            })
+
 
         },
         checkAdmin(){
@@ -143,7 +162,7 @@ const app=createApp({
 
       this.getAllProducts();   
       this.getCarts(); 
-    //   this.productModal=new bootstrap.Modal(this.$refs.productModal);
+      this.productModal=new bootstrap.Modal(this.$refs.productModal);
     //   this.isLoading = true;
     //   this.createProduct();
     },
