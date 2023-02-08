@@ -1,10 +1,31 @@
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+// import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
 // import pagination from './pagination.js';
+const { localize, loadLocaleFromURL } = VeeValidateI18n;
+
+const { createApp } = Vue;
 
 const apiUrl="https://vue3-course-api.hexschool.io/v2";
 
 const path="silvia-hexschool";
+
+
+Object.keys(VeeValidateRules).forEach((rule) => {
+    if (rule !== 'default') {
+      VeeValidate.defineRule(rule, VeeValidateRules[rule]);
+    }
+  });
+  
+  loadLocaleFromURL(
+    'https://unpkg.com/@vee-validate/i18n@4.1.0/dist/locale/zh_TW.json'
+  );
+  
+  VeeValidate.configure({
+    generateMessage: localize('zh_TW'),
+    validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
+  });
+  
+
 
 const app=createApp({
     data() {
@@ -12,7 +33,7 @@ const app=createApp({
             product:{},
             products:[],
             productModal:{},
-            carts:[],
+            carts:[],            
             cartData:{
                 product_id: "",
                 qty: 1
@@ -95,6 +116,9 @@ const app=createApp({
             })
 
         },
+        createOrder(){
+
+        },
         checkAdmin(){
           axios.post(`${apiUrl}/api/user/check`)
           .then(res=>{            
@@ -119,14 +143,19 @@ const app=createApp({
 
       this.getAllProducts();   
       this.getCarts(); 
-      this.productModal=new bootstrap.Modal(this.$refs.productModal);
+    //   this.productModal=new bootstrap.Modal(this.$refs.productModal);
     //   this.isLoading = true;
     //   this.createProduct();
     },
 })
 
 // 元件註冊
-app.component('loading', VueLoading.Component);
+app.component("loading", VueLoading.Component);
+
+app.component('VForm', VeeValidate.Form);
+app.component('VField', VeeValidate.Field);
+app.component('ErrorMessage', VeeValidate.ErrorMessage);
+
 
 app.component("product-modal", {
    props: ["product"],

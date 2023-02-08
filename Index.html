@@ -63,7 +63,7 @@
               </tr>
             </tbody>
           </table>
-          <loading v-model:active="isLoading"></loading>
+          <loading v-model:active="isLoading" /></loading>
           <!-- 購物車清單 -->
           <div class="text-end">
             <button class="btn btn-outline-danger" type="button" @click="removeAllCarts">清空購物車</button>
@@ -99,7 +99,48 @@
               </tr>
             </tbody>
           </table>
-         
+          <v-form class="col-md-6" v-slot="{ errors }" @submit="createOrder" >         
+          <div class="form-group">
+            <label for="email">Email</label>
+            <v-field type="email" class="form-control" id="email" name="email"
+            :class="{ 'is-invalid': errors['email'] }" placeholder="請輸入Email"
+            rules="email|required"> 
+          </v-field>
+          <error-message name="email" class="invalid-feedback"></error-message>
+          </div>
+          <div class="form-group">
+            <label for="name">收件人姓名</label>
+            <v-field type="text" class="form-control" id="name" name="姓名"
+            :class="{ 'is-invalid': errors['姓名'] }" placeholder="請輸入姓名"
+            rules="required">
+            </v-field>
+            <error-message name="姓名" class="invalid-feedback"></error-message>
+          </div>
+          <div class="form-group">
+            <label for="tel">收件人電話</label>
+            <v-field type="text" class="form-control" id="tel" name="電話"
+            :class="{ 'is-invalid': errors['電話'] }" placeholder="請輸入電話"
+            rules="required|min:8|max:10">
+          </v-field>
+          <error-message name="電話" class="invalid-feedback"></error-message>
+          </div>
+          <div class="form-group">
+            <label for="address">收件人地址</label>
+            <v-field type="text" class="form-control" id="address" name="住址"
+            :class="{ 'is-invalid': errors['住址'] }" placeholder="請輸入住址"
+            rules="required">
+            </v-field>
+            <error-message name="住址" class="invalid-feedback"></error-message>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">留言</label>
+            <textarea class="form-control" id="message" cols="30" rows="10"></textarea>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-danger">送出訂單</button>
+          </div>
+        </v-form>
           <!-- Modal -->
           <div
           ref="productModal"
@@ -175,6 +216,9 @@
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@6"></script>
    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.5.8/vee-validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.5.8/dist/vee-validate-rules.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.5.8/dist/vee-validate-i18n.min.js"></script>
 
     <script src="js/index.js" type="module"></script>
   </body>
