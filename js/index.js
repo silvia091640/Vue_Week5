@@ -144,7 +144,8 @@ const app=createApp({
         checkAdmin(){
           axios.post(`${apiUrl}/api/user/check`)
           .then(res=>{            
-                this.getAllProducts();                         
+                this.getAllProducts();   
+                this.getCarts();                       
           })
           .catch(error=>{
             window.location ="login.html";
@@ -166,9 +167,10 @@ const app=createApp({
 
       axios.defaults.headers.common.Authorization = token;
 
-      this.getAllProducts();   
+      this.checkAdmin(){
+    //   this.getAllProducts();   
       
-      this.getCarts(); 
+    //   this.getCarts(); 
       this.productModal=new bootstrap.Modal(this.$refs.productModal);
     //   this.isLoading = true;
     //   this.createProduct();
