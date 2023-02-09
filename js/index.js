@@ -65,7 +65,7 @@ const app=createApp({
         getCarts(){
             axios.get(`${apiUrl}/api/${path}/cart`)
             .then((res)=>{
-                this.carts=res.data.data.carts;
+                this.carts=res.data.data;
                 console.log(res.data.data);
             })
             .catch(error=>{       
