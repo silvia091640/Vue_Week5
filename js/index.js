@@ -26,14 +26,13 @@ Object.keys(VeeValidateRules).forEach((rule) => {
   });
   
 
-
 const app=createApp({
     data() {
         return {          
             product:{},
             products:[],
             productModal:{},
-            carts:[],            
+            carts:[],          
             cartData:{
                 product_id: "",
                 qty: 1
@@ -52,9 +51,11 @@ const app=createApp({
     },
     methods: {
         getAllProducts(){
+            this.isLoading=true,
             axios.get(`${apiUrl}/api/${path}/admin/products/all`)
             .then((res)=>{
                 this.products=res.data.products;
+                this.isLoading=false;
             })
             .catch(error=>{            
                 console.log(error);
@@ -79,6 +80,7 @@ const app=createApp({
                 
                 // console.log(res);
                 this.getCarts();
+                this.hide();
             })
             .catch(error=>{
             
@@ -131,6 +133,7 @@ const app=createApp({
             axios.post(`${apiUrl}/api/${path}/order`,{ data :this.form })
             .then((res)=>{
                 alert(res.data.message);
+                this.$refs.form.resetForm();
             })
             .catch(error=>{            
                 console.log(error);
@@ -147,6 +150,9 @@ const app=createApp({
             window.location ="login.html";
           })
         },
+        hide(){
+            this.productModal.hide();
+        },
         openModal(item){   
             this.product={...item};   
             this.productModal.show();
@@ -161,6 +167,7 @@ const app=createApp({
       axios.defaults.headers.common.Authorization = token;
 
       this.getAllProducts();   
+      
       this.getCarts(); 
       this.productModal=new bootstrap.Modal(this.$refs.productModal);
     //   this.isLoading = true;
@@ -178,8 +185,10 @@ app.component('ErrorMessage', VeeValidate.ErrorMessage);
 
 app.component("product-modal", {
    props: ["product"],
-    template: "#product-modal-template",
+    template: "#userProductModal",
   });
+
+
 app.mount("#app");
 
 
