@@ -167,7 +167,7 @@ const app=createApp({
 
       axios.defaults.headers.common.Authorization = token;
 
-      this.checkAdmin(){
+      this.checkAdmin();
     //   this.getAllProducts();   
       
     //   this.getCarts(); 
