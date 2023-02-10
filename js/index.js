@@ -66,7 +66,6 @@ const app=createApp({
             axios.get(`${apiUrl}/api/${path}/cart`)
             .then((res)=>{
                 this.carts=res.data.data;
-                console.log(res.data.data);
             })
             .catch(error=>{       
                 console.log(error);
@@ -88,7 +87,6 @@ const app=createApp({
             })
         },
         updateCart(item){
-            console.log(item)
             this.cartData.product_id=item.id;
             this.cartData.qty=item.qty;
             axios.put(`${apiUrl}/api/${path}/cart/${item.id}`,{ data:this.cartData })
@@ -106,7 +104,6 @@ const app=createApp({
             axios.delete(`${apiUrl}/api/${path}/cart/${cartId}`)
             .then((res)=>{
                 this.getCarts();
-                console.log(res);
                 alert(res.data.message);
             })
             .catch(error=>{
@@ -129,10 +126,10 @@ const app=createApp({
 
         },
         createOrder(){
-            console.log(this.form)
             axios.post(`${apiUrl}/api/${path}/order`,{ data :this.form })
             .then((res)=>{
                 alert(res.data.message);
+                this.getCarts();
                 this.$refs.form.resetForm();
             })
             .catch(error=>{            
@@ -167,13 +164,11 @@ const app=createApp({
 
       axios.defaults.headers.common.Authorization = token;
 
-      this.checkAdmin();
-    //   this.getAllProducts();   
+    //   this.checkAdmin();
+      this.getAllProducts();   
       
-    //   this.getCarts(); 
+      this.getCarts(); 
       this.productModal=new bootstrap.Modal(this.$refs.productModal);
-    //   this.isLoading = true;
-    //   this.createProduct();
     },
 })
 
