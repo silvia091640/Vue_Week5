@@ -52,7 +52,7 @@ const app=createApp({
     methods: {
         getAllProducts(){
             this.isLoading=true,
-            axios.get(`${apiUrl}/api/${path}/admin/products/all`)
+            axios.get(`${apiUrl}/api/${path}/products/all`)
             .then((res)=>{
                 this.products=res.data.products;
                 this.isLoading=false;
@@ -160,9 +160,9 @@ const app=createApp({
        
     },
     mounted() {
-      const token= document.cookie.replace(/(?:(?:^|.*;\s*)hexschoolToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    //   const token= document.cookie.replace(/(?:(?:^|.*;\s*)hexschoolToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
-      axios.defaults.headers.common.Authorization = token;
+    //   axios.defaults.headers.common.Authorization = token;
 
     //   this.checkAdmin();
       this.getAllProducts();   
